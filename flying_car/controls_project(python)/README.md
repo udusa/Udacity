@@ -37,7 +37,7 @@ Body rates determine the yaw,pitch,roll rotation speed in the body frame, and co
 
 The most complex PD controller that uses acceleration in world frame and produce a desired roll,pitch rates in the body frame : 
 <br><br>
-<img src="http://latex.codecogs.com/svg.latex? b^x_c=\frac{acceleration_x\cdot mass}{-thrust}" border="0"/>
+<img src="http://latex.codecogs.com/png.latex? b^x_c=\frac{acceleration_x\cdot mass}{-thrust}" border="0"/>
 <img src="http://latex.codecogs.com/svg.latex? b^y_c = \frac{acceleration_y\cdot mass}{-thrust}" border="0"/>
 <br>
 <img src="http://latex.codecogs.com/svg.latex? \dot{b}^x_c  = k_p(b^x_c - b^x_a)" border="0"/>
