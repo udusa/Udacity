@@ -66,14 +66,14 @@ Lateral posiotn controller is a PD controller that use desired position and velo
 ### 2 .Results
 
 ### Horizontal trajectory :
-<img src="img/horizontal_trajectory.png" width="600">
+<img src="img/3d_he.png" width="600">
 ### Horizontal error : 
-<img src="img/horizontal_err.png" width="600">
+<img src="img/he.png" width="600">
 ### Vertical trajectory : 
-<img src="img/vertical_trajectory.png" width="600">
+<img src="img/3d_ve.png" width="600">
 ### Vertical error : 
-<img src="img/vertical_err.png" width="600">
+<img src="img/ve.png" width="600">
 ### 3D trajectory : 
-<img src="img/3d_trajectory.png" width="600">
+<img src="img/3d.png" width="600">
 ### Console result : 
-<img src="img/console_result.png" width="600">
+<img src="img/cl.png" width="600">

@@ -27,7 +27,7 @@ class NonlinearController(object):
         self.z_k_p      = omega**2
         self.z_k_d      = 2.0*delta*omega
 
-        p = .10
+        p = .1
         d = 2.0
 
         # omega = 1.0
@@ -38,8 +38,8 @@ class NonlinearController(object):
         self.y_k_p      = p
         self.y_k_d      = d
 
-        self.k_p_roll   = 3.0
-        self.k_p_pitch  = 3.0
+        self.k_p_roll   = 2.0
+        self.k_p_pitch  = 2.0
         self.k_p_yaw    = 1.70
 
         self.k_p_p      = 25.0
@@ -98,14 +98,12 @@ class NonlinearController(object):
     def lateral_position_control(self, local_position_cmd, local_velocity_cmd, local_position, local_velocity,
                                acceleration_ff = np.array([0.0, 0.0])):
         """Generate horizontal acceleration commands for the vehicle in the local frame
-
         Args:
             local_position_cmd: desired 2D position in local frame [north, east]
             local_velocity_cmd: desired 2D velocity in local frame [north_velocity, east_velocity]
             local_position: vehicle position in the local frame [north, east]
             local_velocity: vehicle velocity in the local frame [north_velocity, east_velocity]
-            acceleration_cmd: feedforward acceleration command
-            
+            acceleration_cmd: feedforward acceleration command   
         Returns: desired vehicle 2D acceleration in the local frame [north, east]
         """
 
@@ -116,19 +114,18 @@ class NonlinearController(object):
         acc_y = self.y_k_p * (local_position_cmd[1]-local_position[1]) + \
                 self.y_k_d * (local_velocity_cmd[1]-local_velocity[1]) + \
                 acceleration_ff[1]
+
         return np.array([acc_x, acc_y])
     
     def altitude_control(self, altitude_cmd, vertical_velocity_cmd, altitude, vertical_velocity, attitude, acceleration_ff=0.0):
         """Generate vertical acceleration (thrust) command
-
         Args:
             altitude_cmd: desired vertical position (+up)
             vertical_velocity_cmd: desired vertical velocity (+up)
             altitude: vehicle vertical position (+up)
             vertical_velocity: vehicle vertical velocity (+up)
             attitude: the vehicle's current attitude, 3 element numpy array (roll, pitch, yaw) in radians
-            acceleration_ff: feedforward acceleration command (+up)
-            
+            acceleration_ff: feedforward acceleration command (+up) 
         Returns: thrust command for the vehicle (+up)
         """
         rot_mat = euler2RM(attitude[0],attitude[1],attitude[2])
@@ -146,7 +143,6 @@ class NonlinearController(object):
     
     def roll_pitch_controller(self, acceleration_cmd, attitude, thrust_cmd):
         """ Generate the rollrate and pitchrate commands in the body frame
-        
         Args:
             target_acceleration: 2-element numpy array (north_acceleration_cmd,east_acceleration_cmd) in m/s^2
             attitude: 3-element numpy array (roll, pitch, yaw) in radians
@@ -162,7 +158,9 @@ class NonlinearController(object):
         b_x_c = rot_mat[0,2]
         b_y_c = rot_mat[1,2]
 
-        b_xy_dot = np.array([b_x - b_x_c,b_y - b_y_c]).T
+        b_xy_dot = np.array([self.k_p_roll *(b_x - b_x_c),
+                             self.k_p_pitch*(b_y - b_y_c)]).T 
+
 
         mat = np.array([[rot_mat[1][0],-rot_mat[0][0]],
                         [rot_mat[1][1],-rot_mat[0][1]]])/rot_mat[2][2]
