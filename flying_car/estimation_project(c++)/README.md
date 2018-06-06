@@ -14,8 +14,8 @@ print('GPS std : ',np.std(GPS[1,:]))
 print('ACCEL std : ',np.std(ACCEL[1,:]))
 ```
 
-    GPS std :  0.569949527456
-    ACCEL std :  0.502197849147
+    GPS std :  0.713855910778
+    ACCEL std :  0.512473221795
 
 
 Result :
